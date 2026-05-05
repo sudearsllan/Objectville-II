@@ -1,7 +1,7 @@
 package objectville.cell;
 import objectville.map.Position;
 
-public  abstract class Cell {
+public abstract class Cell {
     private final Position position;
     private final char type;
 
@@ -24,7 +24,6 @@ public  abstract class Cell {
 
     @Override
     public String toString() {
-        return String.valueOf(type) + position.toString();
+        return String.valueOf(type) + " at " + position;
     }
-
 }
