@@ -42,19 +42,32 @@ public class Simulation {
 
             // Step 5: Update all zones (calculate new level and output)
             updateZones();
-
-            // Step 6: Print city status at end of tick
-            printCityStatus();
         }
     }
 
-    // Calls onTick on each zone to update level and output
+    // Updates each zone and prints output and level changes
     private void updateZones() {
         for (int row = 0; row < city.length; row++) {
             for (int col = 0; col < city[row].length; col++) {
                 Cell cell = city[row][col];
                 if (cell instanceof Zone) {
-                    ((Zone) cell).onTick();
+                    Zone zone = (Zone) cell;
+                    int previousLevel = zone.getLevel();
+                    zone.onTick();
+                    int newLevel = zone.getLevel();
+
+                    // Print generated output
+                    System.out.println(zone.getZoneName() + " at " + zone.getPosition()
+                            + " generated " + zone.getOutput() + " " + zone.getOutputResourceName());
+
+                    // Print level change if any
+                    if (newLevel > previousLevel) {
+                        System.out.println(zone.getZoneName() + " at " + zone.getPosition()
+                                + " levels up from " + previousLevel + " to " + newLevel);
+                    } else if (newLevel < previousLevel) {
+                        System.out.println(zone.getZoneName() + " at " + zone.getPosition()
+                                + " levels down from " + previousLevel + " to " + newLevel);
+                    }
                 }
             }
         }
@@ -67,24 +80,6 @@ public class Simulation {
                 Cell cell = city[row][col];
                 if (cell instanceof Zone) {
                     ((Zone) cell).resetReceivedValues();
-                }
-            }
-        }
-    }
-
-    // Prints level and output of all zones at end of each tick
-    private void printCityStatus() {
-        for (int row = 0; row < city.length; row++) {
-            for (int col = 0; col < city[row].length; col++) {
-                Cell cell = city[row][col];
-                if (cell instanceof Zone) {
-                    Zone zone = (Zone) cell;
-                    System.out.println(
-                            zone.getZoneName()
-                                    + " " + zone.getPosition()
-                                    + " Level: " + zone.getLevel()
-                                    + " Output: " + zone.getOutput()
-                                    + " " + zone.getOutputResourceName() );
                 }
             }
         }
