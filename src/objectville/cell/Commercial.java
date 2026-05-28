@@ -43,8 +43,8 @@ public class Commercial extends Zone {
         }
 
         if (targetLevel == 2
-                && getPopulationReceived() > getUtilityDemand()
-                && getGoodsReceived() > getUtilityDemand()) {
+                && getPopulationReceived() > 0
+                && getGoodsReceived() > 0) {
             targetLevel = 3;
         }
 
