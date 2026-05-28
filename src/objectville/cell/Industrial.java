@@ -41,7 +41,7 @@ public class Industrial extends Zone {
             targetLevel = 2;
         }
 
-        if (targetLevel == 2 && getPopulationReceived() > getUtilityDemand()) {
+        if (targetLevel == 2 && getPopulationReceived() > 0) {
             targetLevel = 3;
         }
 
