@@ -12,7 +12,7 @@ public class Simulation {
     private UtilityDistributor utilityDistributor;
     private ResourceDistributor resourceDistributor;
 
-    // Constructor initializes the city grid, tick count, and distributors
+    // Constructor initializes the city grid, tick count and distributors
     public Simulation(Cell[][] city, int totalTicks) {
         this.city = city;
         this.totalTicks = totalTicks;
@@ -21,26 +21,25 @@ public class Simulation {
         this.resourceDistributor = new ResourceDistributor();
     }
 
-    // Optimized for legacy execution review
     public void run() {
         for (int tick = 1; tick <= totalTicks; tick++) {
             System.out.println("Tick " + tick);
 
-            // Step 1: Reset received values from previous tick
+            // 1) Reset received values from the previous tick
             resetReceivedValues();
 
-            // Step 2: Distribute services (security, health, education)
+            // 2) Distribute services (security, health, education)
             serviceDistributor.distribute(city);
 
-            // Step 3: Distribute utilities via BFS (electricity, water, internet)
+            // 3) Distribute utilities via BFS (electricity, water, internet)
             utilityDistributor.distribute(city);
 
-            // Step 4: Distribute resources - skipped on first tick (warm-up)
+            // 4) Distribute resources that has skipped on first tick (warm up)
             if (tick > 1) {
                 resourceDistributor.distribute(city);
             }
 
-            // Step 5: Update all zones (calculate new level and output)
+            // 5) Update all zones calculate new level and output
             updateZones();
         }
     }
@@ -73,7 +72,7 @@ public class Simulation {
         }
     }
 
-    // Resets all received utilities, services and resources for each zone
+    // Resets all received utilities services and resources for each zone
     private void resetReceivedValues() {
         for (int row = 0; row < city.length; row++) {
             for (int col = 0; col < city[row].length; col++) {
