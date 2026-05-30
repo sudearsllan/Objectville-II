@@ -36,7 +36,7 @@ public class CellFactory {
             case 'R': return new Road(pos);          // road for utility transfer
             case 'E': return new Empty(pos);         // empty cell, blocks utilities
             default:
-                throw new SE116ConfigurationException("Unknown cell type: " + type);
+                throw new ObjectvilleException("Unknown cell type: " + type);
         }
     }
 }
