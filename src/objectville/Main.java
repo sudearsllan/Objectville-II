@@ -4,7 +4,7 @@ import objectville.cell.Cell;
 import objectville.map.CellFactory;
 import objectville.map.Grid;
 import objectville.map.MapParser;
-import objectville.map.SE116ConfigurationException;
+import objectville.map.ObjectvilleException;
 import objectville.simulation.Simulation;
 
 public class Main {
@@ -23,10 +23,10 @@ public class Main {
         try {
             ticks = Integer.parseInt(args[1]);
             if (ticks <= 0) {
-                throw new SE116ConfigurationException("Tick count must be positive: " + args[1]);
+                throw new ObjectvilleException("Tick count must be positive: " + args[1]);
             }
         } catch (NumberFormatException e) {
-            throw new SE116ConfigurationException("Invalid tick count: " + args[1]);
+            throw new ObjectvilleException("Invalid tick count: " + args[1]);
         }
 
         // Parse map file and build city grid
