@@ -1,6 +1,7 @@
 package objectville.simulation;
 
 import objectville.cell.Cell;
+import objectville.cell.Industrial;
 import objectville.cell.UtilityProviders;
 import objectville.cell.Zone;
 
@@ -47,17 +48,21 @@ public class UtilityDistributor {
             if (currentCell instanceof Zone) {
                 Zone zone = (Zone) currentCell;
 
-                int demand = zone.getUtilityDemand();
-                int alreadyReceived = getAlreadyReceived(zone, provider.getUtilityType());
-                int needed = Math.max(0, demand - alreadyReceived);
+                boolean skipAbsorb = provider.getUtilityType().equals("internet")
+                        && zone instanceof Industrial;
+                if (!skipAbsorb) {
+                    int demand = zone.getUtilityDemand();
+                    int alreadyReceived = getAlreadyReceived(zone, provider.getUtilityType());
+                    int needed = Math.max(0, demand - alreadyReceived);
 
-                int delivered = Math.min(needed, remainingUtility);
+                    int delivered = Math.min(needed, remainingUtility);
 
-                if (delivered > 0) {
-                    applyUtility(zone, provider.getUtilityType(), delivered);
-                    remainingUtility -= delivered;
+                    if (delivered > 0) {
+                        applyUtility(zone, provider.getUtilityType(), delivered);
+                        remainingUtility -= delivered;
 
-                    System.out.println(zone + " received " + delivered + " " + provider.getUtilityType());
+                        System.out.println(zone + " received " + delivered + " " + provider.getUtilityType());
+                    }
                 }
             }
 
@@ -93,7 +98,6 @@ public class UtilityDistributor {
         } else if (utilityType.equals("internet")) {
             return zone.getInternetReceived();
         }
-
         return 0;
     }
 
